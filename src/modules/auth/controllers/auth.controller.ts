@@ -10,12 +10,14 @@ import { AuthService } from '../services/auth.service';
 import { LoginDto } from '../Dtos/login.dto';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) {}
     
-
+    
     @UseGuards(LocalAuthGuard)
     @Post('login')
     async login( @Body() loginDto: LoginDto): Promise<any> {
