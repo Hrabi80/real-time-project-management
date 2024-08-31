@@ -1,6 +1,7 @@
 enum UserRoles {
-    ADMIN = 'admin',
-    MEMBER = 'member',
+    ADMIN = 'admin',  // application admin
+    MANAGER = 'manager', // project manager
+    MEMBER = 'member', // employee
   }
   
   export { UserRoles };
