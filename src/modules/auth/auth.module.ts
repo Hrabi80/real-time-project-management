@@ -9,8 +9,15 @@ import { jwtConfig } from 'src/config/jwt.config';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
-  providers: [AuthService,LocalStrategy,JwtStrategy],
+  providers: [AuthService,
+              LocalStrategy,
+              JwtStrategy
+            ],
   controllers: [AuthController],
-  imports:[PassportModule,JwtModule.registerAsync(jwtConfig),UserModule]
+  imports:[PassportModule,
+           JwtModule.registerAsync(jwtConfig),
+           UserModule
+          ],
+  exports:[]
 })
 export class AuthModule {}

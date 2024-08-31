@@ -20,8 +20,9 @@ export class AuthController {
     
     @UseGuards(LocalAuthGuard)
     @Post('login')
-    async login( @Body() loginDto: LoginDto): Promise<any> {
-      return await this.authService.generateToken(loginDto);
+    async login(@Request() req): Promise<any> {
+      console.log("Logged in user:", req.user);
+      return await this.authService.generateToken(req.user);
     }
 
     @UseGuards(JwtAuthGuard)
