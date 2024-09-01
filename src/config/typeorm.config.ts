@@ -2,6 +2,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModuleAsyncOptions, TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { Project } from 'src/modules/project/entities/project.entity'
 import { Task } from 'src/modules/project/entities/task.entity'
+import { Manager } from 'src/modules/user/entities/manager.entity'
 import { User } from 'src/modules/user/entities/user.entity'
 
 
@@ -18,7 +19,7 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
       username: process.env.DB_USERNAME,
       database: process.env.DB_NAME,
       password: process.env.DB_PASSWORD,
-      entities: [User,Project,Task],
+      entities: [User,Project,Task,Manager],
       migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
       extra: {
         charset: 'utf8mb4_unicode_ci',

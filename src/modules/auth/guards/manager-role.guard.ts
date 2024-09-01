@@ -8,14 +8,12 @@ export class ManagerRoleGuard implements CanActivate {
   constructor(private userService: UserService) {}
 
   async canActivate(context: ExecutionContext) {
-    const request = context.switchToHttp().getRequest(); //get the user context 
+    const request = context.switchToHttp().getRequest(); //get the user context
+    
       
     if (request?.user) { 
-      console.log("User context in guard:", request.user);  
-      console.log("user context here =============>",request.user);
       const { id } = request.user;  
-      const user = await this.userService.getUserById(id); //get User object byId
-      console.log("user email here =============>",user.email);
+      const user = await this.userService.getManagerById(id); //get User object byId
       return user.role === UserRoles.MANAGER;
     }
 

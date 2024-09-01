@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Task } from "./task.entity";
+import { Manager } from "src/modules/user/entities/manager.entity";
 
 
 @Entity({name:'projects'})
@@ -26,7 +27,10 @@ export class Project extends BaseEntity{
     endDate?:Date;
     
     @OneToMany(() => Task, (task) => task.project)
-    tasks:  Task[]
+    tasks:  Task[];
+
+    @ManyToOne(() => Manager, manager => manager.projects) // Define the relation with  (manager)
+    manager: Manager; // The manager who owns the project
 
     @ApiProperty({ description: 'When project was created' })
     @CreateDateColumn()

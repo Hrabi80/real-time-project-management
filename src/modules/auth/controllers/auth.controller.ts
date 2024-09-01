@@ -25,6 +25,9 @@ export class AuthController {
       return await this.authService.generateToken(req.user);
     }
 
+
+    
+
     @UseGuards(JwtAuthGuard)
     @Get('user')
     async user(@Request() req): Promise<any> {

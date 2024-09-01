@@ -1,6 +1,7 @@
 import {
     BadRequestException,
     Injectable,
+    NotFoundException,
     UnauthorizedException,
   } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -15,10 +16,10 @@ export class AuthService {
   ) {}
 
   async validateUserCreds(email: string, password: string): Promise<any> {
-    console.log("emai and password ==>", email,password);
+    
     const user = await this.userService.getUserByEmail(email);
-
-    if (!user) throw new BadRequestException();
+    console.log("user in validateUser Cred ==>",user);
+    if (!user) throw new NotFoundException();
 
     if (!(await bcrypt.compare(password, user.password)))
       throw new UnauthorizedException();
