@@ -26,7 +26,7 @@ export class Project extends BaseEntity{
     @Column({nullable:true})
     endDate?:Date;
     
-    @OneToMany(() => Task, (task) => task.project)
+    @OneToMany(() => Task, (task) => task.project, { onDelete: 'CASCADE' })
     tasks:  Task[];
 
     @ManyToOne(() => Manager, manager => manager.projects) // Define the relation with  (manager)

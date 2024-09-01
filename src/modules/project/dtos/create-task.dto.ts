@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsArray, IsDate, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 import { TaskStates } from "../enums/status.enum";
 
 
@@ -43,9 +43,9 @@ export class CreateTaskDto {
         description: 'The date when the user was assigned to the task', 
         example: '2024-08-30' 
     })
-    @IsNotEmpty()
+    @IsOptional()
     @IsDate()
-    assignedDate: Date;
+    assignedDate?: Date;
 
     @ApiProperty({ 
         description: 'The project ID this task belongs to', 
@@ -54,6 +54,14 @@ export class CreateTaskDto {
     @IsOptional()
     projectId?: number;
 
+    @ApiProperty({ 
+        description: 'The member IDs this task is assigned to', 
+        example: [2, 3] 
+    })
+    @IsOptional()
+    @IsArray()
+    @IsNumber({}, { each: true })
+    memberIds?: number[];
     @ApiProperty({ 
         description: 'When the task was created' 
     })

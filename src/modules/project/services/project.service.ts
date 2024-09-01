@@ -12,7 +12,9 @@ export class ProjectService {
 
     constructor(
         @InjectRepository(Project)
-        private readonly projectRepository : Repository<Project>
+        private readonly projectRepository : Repository<Project>,
+        @InjectRepository(Task)
+    private readonly taskRepository: Repository<Task>,
     ){}
 
     async getProjectById(id : number):Promise<Project>{
@@ -69,7 +71,10 @@ export class ProjectService {
       if (project.manager.id !== manager.id) {
         throw new UnauthorizedException('You do not have permission to delete this project');
       }
-
+      // Manually delete all tasks related to this project
+      if (project.tasks && project.tasks.length > 0) {
+        await this.taskRepository.remove(project.tasks);
+      }
       await this.projectRepository.remove(project);
      }
 
