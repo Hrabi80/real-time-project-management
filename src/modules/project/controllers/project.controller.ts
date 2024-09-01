@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Request, Param, ParseIntPipe, Post, Put, UseGuards, UsePipes, ValidationPipe, BadRequestException, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Get, Request, Param, ParseIntPipe, Post, Put, UseGuards, UsePipes, ValidationPipe, BadRequestException, Delete, HttpCode, HttpStatus, NotFoundException } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiOkResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { ProjectService } from '../services/project.service';
 import { createProjectDto } from '../dtos/create-project.dto';
@@ -18,7 +18,11 @@ export class ProjectController {
    
     @Get('/one/:id')
     async getProjectById(@Param('id', ParseIntPipe) id:number){
-        return await this.projectService.getProjectById(id);
+      const project =await this.projectService.getProjectById(id)
+      if (!project) {
+        throw new NotFoundException(`Project with ID ${id} not found`);
+      }
+        return project;
     }
     
     @Post('/')

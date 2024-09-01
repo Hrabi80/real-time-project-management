@@ -10,6 +10,9 @@ import { AuthModule } from './modules/auth/auth.module';
 import { SeedService } from './database/seeds/user.seed';
 import { SeedModule } from './database/seeds/seed.module';
 import { GatewayModule } from './modules/gateway/gateway.module';
+import { TestModule } from './modules/test/test.module';
+import { TestingModule } from './modules/testing/testing.module';
+import { TestModule } from './modules/test/test.module';
 
 @Module({
   imports: [ TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
@@ -19,7 +22,9 @@ import { GatewayModule } from './modules/gateway/gateway.module';
               ProjectModule,
               UserModule,
               AuthModule,
-              GatewayModule
+              GatewayModule,
+              TestModule,
+              TestingModule
 
             ],
   controllers: [AppController],

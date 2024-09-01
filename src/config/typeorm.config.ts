@@ -45,3 +45,16 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
     synchronize: true,
     logging: true,
   };
+
+  export const testOrmConfig: TypeOrmModuleOptions = {
+    type: 'postgres',
+    host: process.env.TEST_DATABASE_HOST,
+    port: parseInt(process.env.TEST_DATABASE_PORT, 10),
+    username: process.env.TEST_DATABASE_USERNAME,
+    password: process.env.TEST_DATABASE_PASSWORD,
+    database: process.env.TEST_DATABASE_NAME,
+    entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+    synchronize: true, // Automatically create the schema in the test database
+    dropSchema: true, // Drops the schema at the end of every test suite
+  };
+  
