@@ -37,7 +37,7 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
     username: process.env.DB_USERNAME,
     database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
-    entities: [__dirname + '/../**/*.entity.{js,ts}'],
+    entities: [User,Project,Task,Manager],
     migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
     extra: {
       charset: 'utf8mb4_unicode_ci',

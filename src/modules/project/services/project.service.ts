@@ -4,9 +4,9 @@ import { Project } from '../entities/project.entity';
 import { Task } from '../entities/task.entity';
 import { Repository } from 'typeorm';
 import { createProjectDto } from '../dtos/create-project.dto';
-import { Manager } from 'src/modules/user/entities/manager.entity';
+import { Manager } from '../../../modules/user/entities/manager.entity';
 import { updateProjectDto } from '../dtos/update-project.dto';
-import { RealTimeProjectGateway } from 'src/modules/gateway/real-time-project-gateway';
+import { RealTimeProjectGateway } from '../../../modules/gateway/real-time-project-gateway';
 
 @Injectable()
 export class ProjectService {
@@ -20,9 +20,13 @@ export class ProjectService {
     ){}
 
     async getProjectById(id : number):Promise<Project>{
-        return await this.projectRepository.findOne({
+        const project =  await this.projectRepository.findOne({
            where: { id: id},  relations:['tasks','manager']
        });
+       if (!project) {
+        throw new NotFoundException(`Project with ID ${id} not found`);
+      }
+      return project;
     }
    
     async createNewProject(projectData : createProjectDto,manager: Manager){

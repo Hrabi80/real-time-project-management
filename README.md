@@ -56,7 +56,7 @@ http://localhost:3000/api/documentation
 
 ```bash
 # unit tests
-$ npm run test
+$ npm run test -- --config=jest.config.js
 
 # e2e tests
 $ npm run test:e2e

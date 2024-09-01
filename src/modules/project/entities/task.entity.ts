@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { TaskStates } from "../enums/status.enum";
 import { Project } from "./project.entity";
-import { User } from "src/modules/user/entities/user.entity";
+import { User } from "../../../modules/user/entities/user.entity";
 
 
 @Entity({name:'tasks'})

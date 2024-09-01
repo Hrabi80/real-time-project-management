@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Task } from "./task.entity";
-import { Manager } from "src/modules/user/entities/manager.entity";
+import { Manager } from "../../../modules/user/entities/manager.entity";
 
 
 @Entity({name:'projects'})

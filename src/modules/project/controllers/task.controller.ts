@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, Post, UseGuards, Request, HttpStatus, Put, Param, ParseIntPipe, Get, Delete } from "@nestjs/common";
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiOkResponse, ApiSecurity, ApiTags } from "@nestjs/swagger";
-import { JwtAuthGuard } from "src/modules/auth/guards/jwt-auth.guard";
+import { JwtAuthGuard } from "../../../modules/auth/guards/jwt-auth.guard";
 import { TaskService } from "../services/task.service";
 import { Task } from "../entities/task.entity";
 import { CreateTaskDto } from "../dtos/create-task.dto";

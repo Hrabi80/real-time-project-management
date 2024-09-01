@@ -4,7 +4,6 @@ import { UserRegisterRequestDto } from "../dtos/user-register.req.dto";
 import { SETTINGS } from "src/utils/app.utils";
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiSecurity, ApiTags } from "@nestjs/swagger";
 import { User } from "../entities/user.entity";
-import { JwtAuthGuard } from "src/modules/auth/guards/jwt-auth.guard";
 
 @ApiTags('User')
 @Controller('user')

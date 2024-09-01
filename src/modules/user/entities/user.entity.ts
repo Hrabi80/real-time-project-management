@@ -2,7 +2,7 @@ import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, ManyToMany,
 import { UserRoles } from '../enums/user.enum';
 import * as bcrypt from 'bcrypt';
 import { ApiProperty } from "@nestjs/swagger";
-import { Task } from "src/modules/project/entities/task.entity";
+import { Task } from "../../../modules/project/entities/task.entity";
 @Entity({name:'users'})
 export class User extends BaseEntity{
     @ApiProperty({ description: 'Primary key as User ID', example: 1 })

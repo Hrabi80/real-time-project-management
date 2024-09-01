@@ -3,10 +3,9 @@ import { ApiBadRequestResponse, ApiCreatedResponse, ApiOkResponse, ApiSecurity, 
 import { ProjectService } from '../services/project.service';
 import { createProjectDto } from '../dtos/create-project.dto';
 import { Project } from '../entities/project.entity';
-import { SETTINGS } from 'src/utils/app.utils';
-import { AdminRoleGuard } from 'src/modules/auth/guards/admin-role.guard';
-import { JwtAuthGuard } from 'src/modules/auth/guards/jwt-auth.guard';
-import { ManagerRoleGuard } from 'src/modules/auth/guards/manager-role.guard';
+import { SETTINGS } from '../../../utils/app.utils';
+import { JwtAuthGuard } from '../../../modules/auth/guards/jwt-auth.guard';
+import { ManagerRoleGuard } from '../../../modules/auth/guards/manager-role.guard';
 import { updateProjectDto } from '../dtos/update-project.dto';
 
 

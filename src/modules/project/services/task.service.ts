@@ -4,11 +4,11 @@ import { Task } from "../entities/task.entity";
 import { Repository } from "typeorm";
 import { ProjectService } from "./project.service";
 import { CreateTaskDto } from "../dtos/create-task.dto";
-import { User } from "src/modules/user/entities/user.entity";
-import { UserService } from "src/modules/user/services/user.service";
+import { User } from "../../../modules/user/entities/user.entity";
+import { UserService } from "../../../modules/user/services/user.service";
 import { TaskStates } from "../enums/status.enum";
 import { UpdateTaskDto } from "../dtos/update-task.dto";
-import { RealTimeProjectGateway } from "src/modules/gateway/real-time-project-gateway";
+import { RealTimeProjectGateway } from "../../../modules/gateway/real-time-project-gateway";
 @Injectable()
 export class TaskService {
     constructor(
