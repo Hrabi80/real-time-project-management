@@ -8,14 +8,14 @@ import { User } from "src/modules/user/entities/user.entity";
 import { UserService } from "src/modules/user/services/user.service";
 import { TaskStates } from "../enums/status.enum";
 import { UpdateTaskDto } from "../dtos/update-task.dto";
-
+import { RealTimeGateway } from "src/modules/gateway/real-time-gateway";
 @Injectable()
 export class TaskService {
     constructor(
         @InjectRepository(Task)
         private readonly taskRepository: Repository<Task>,
         private readonly projectService: ProjectService,
-        private readonly userService: UserService
+        private readonly userService: UserService,
       ) {}
 
     
@@ -146,7 +146,6 @@ export class TaskService {
     if (!Object.values(TaskStates).includes(task.state)) {
       throw new BadRequestException('Invalid task state');
     }
-
     return await this.taskRepository.save(task);
   }
 
