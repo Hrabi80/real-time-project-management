@@ -8,7 +8,7 @@ import { User } from "src/modules/user/entities/user.entity";
 import { UserService } from "src/modules/user/services/user.service";
 import { TaskStates } from "../enums/status.enum";
 import { UpdateTaskDto } from "../dtos/update-task.dto";
-import { RealTimeGateway } from "src/modules/gateway/real-time-gateway";
+import { RealTimeProjectGateway } from "src/modules/gateway/real-time-project-gateway";
 @Injectable()
 export class TaskService {
     constructor(
@@ -16,6 +16,7 @@ export class TaskService {
         private readonly taskRepository: Repository<Task>,
         private readonly projectService: ProjectService,
         private readonly userService: UserService,
+        private readonly realTimeGateway: RealTimeProjectGateway, 
       ) {}
 
     
@@ -43,8 +44,12 @@ export class TaskService {
       if (task.deadline <= task.createdAt) {
         throw new BadRequestException('Deadline must be after the creation date.');
       }
+      const savedTask = await this.taskRepository.save(task);
 
-    return await this.taskRepository.save(task);
+      // Emit real-time update event for task creation
+      this.realTimeGateway.broadcastTaskUpdate(project.id);
+    
+      return savedTask;
   }
 
 
@@ -86,7 +91,12 @@ export class TaskService {
     task.assignedMembers.push(user);
     task.assignedDate = new Date();
 
-    return await this.taskRepository.save(task);
+    const updatedTask = await this.taskRepository.save(task);
+
+     // Emit real-time update event for the assigned user
+     this.realTimeGateway.SendUpdatedTaskToAssignedUser({ taskId: task.id, userId, managerId: manager.id });
+
+     return updatedTask;
   }
 
   async getAllTasksByProject(projectId: number): Promise<Task[]> {
@@ -146,7 +156,10 @@ export class TaskService {
     if (!Object.values(TaskStates).includes(task.state)) {
       throw new BadRequestException('Invalid task state');
     }
-    return await this.taskRepository.save(task);
+    const updatedTask = await this.taskRepository.save(task);
+     this.realTimeGateway.broadcastTaskUpdate(task.project.id);
+
+    return updatedTask;
   }
 
   async deleteTask(taskId: number, user: User): Promise<void> {

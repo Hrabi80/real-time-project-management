@@ -1,8 +1,9 @@
 import { Module } from "@nestjs/common";
-import { RealTimeGateway } from "./real-time-gateway";
+import { RealTimeProjectGateway } from "./real-time-project-gateway";
 
 @Module({
-    providers:[RealTimeGateway]
+    providers:[RealTimeProjectGateway],
+    exports:[RealTimeProjectGateway]
 })
 
 export class GatewayModule{}

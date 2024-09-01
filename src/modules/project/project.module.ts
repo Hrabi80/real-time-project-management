@@ -10,16 +10,17 @@ import { User } from '../user/entities/user.entity';
 import { TaskController } from './controllers/task.controller';
 import { TaskService } from './services/task.service';
 import { GatewayModule } from '../gateway/gateway.module';
-import { RealTimeGateway } from '../gateway/real-time-gateway';
+import { RealTimeProjectGateway } from '../gateway/real-time-project-gateway';
+import { ProjectListenerService } from './listeners/project-listner.service';
 
 @Module({
     
 
   controllers: [ProjectController,TaskController],
   imports:[TypeOrmModule.forFeature([Project, Task,Manager,User]),
-           UserModule ,RealTimeGateway
+           UserModule ,RealTimeProjectGateway,GatewayModule
           ],
 
-  providers: [ProjectService,TaskService]
+  providers: [ProjectService,TaskService,ProjectListenerService]
 })
 export class ProjectModule {}

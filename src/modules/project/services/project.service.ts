@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { createProjectDto } from '../dtos/create-project.dto';
 import { Manager } from 'src/modules/user/entities/manager.entity';
 import { updateProjectDto } from '../dtos/update-project.dto';
+import { RealTimeProjectGateway } from 'src/modules/gateway/real-time-project-gateway';
 
 @Injectable()
 export class ProjectService {
@@ -14,7 +15,8 @@ export class ProjectService {
         @InjectRepository(Project)
         private readonly projectRepository : Repository<Project>,
         @InjectRepository(Task)
-    private readonly taskRepository: Repository<Task>,
+        private readonly taskRepository: Repository<Task>,
+        private readonly realTimeGateway: RealTimeProjectGateway, 
     ){}
 
     async getProjectById(id : number):Promise<Project>{
@@ -25,7 +27,10 @@ export class ProjectService {
    
     async createNewProject(projectData : createProjectDto,manager: Manager){
         const project = this.projectRepository.create({ ...projectData, manager });
-        return await this.projectRepository.save(project);
+        const savedProject = await this.projectRepository.save(project);
+        // Notify WebSocket clients about the new project
+        this.realTimeGateway.broadcastProjectUpdate(manager.id);
+        return savedProject;
     }
 
      // Method to get all projects
@@ -43,7 +48,6 @@ export class ProjectService {
 
     async updateProject(id: number, projectUpdatedData: updateProjectDto, manager: Manager): Promise<Project> {
         const project = await this.getProjectById(id);
-        console.log("project data to update",projectUpdatedData)
         if(projectUpdatedData == null  ) throw new Error('nothing to be updated');
         if (!project) {
           throw new NotFoundException('Project not found');
@@ -54,7 +58,10 @@ export class ProjectService {
         }
     
         Object.assign(project, projectUpdatedData);
-        return await this.projectRepository.save(project);
+        const updatedProject = await this.projectRepository.save(project);
+        // Notify WebSocket clients about the updated project
+        this.realTimeGateway.broadcastProjectUpdate(manager.id);
+        return updatedProject;
     }
 
     // Method to delete a project by ID, ensuring the manager is the owner
@@ -76,6 +83,8 @@ export class ProjectService {
         await this.taskRepository.remove(project.tasks);
       }
       await this.projectRepository.remove(project);
+      // Notify WebSocket clients about the deleted project
+       this.realTimeGateway.broadcastProjectUpdate(manager.id);
      }
 
      
