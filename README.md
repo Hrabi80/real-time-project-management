@@ -2,7 +2,7 @@
 
 ## Description
 
-An real time project management application using NestJs and typeORM
+A real-time project management application using NestJS and TypeORM.
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
@@ -19,7 +19,7 @@ Before you begin, ensure you have met the following requirements:
 ```bash
 git clone https://github.com/Hrabi80/real-time-project-management.git
 cd real-time-project-management
-## Compile and run the project
+
 ```
 ### 2. Install dependencies
 
@@ -28,8 +28,10 @@ $ npm install
 ```
 ### 3. configure your local environment variables
 
--configure your .env file ,(you can configure it based on env.example)
--Ensure your MySQL or PostgreSQL server is running. Create a database  and the entities will be synchronized automatically if you have synchronize: true in your TypeORM configuration in file config/typeorm.config.ts.
+- Configure your `.env` file (you can use `.env.example` as a reference).
+- Ensure your MySQL server is running.
+- Create a database, and the entities will be synchronized automatically if you have `synchronize: true` in your TypeORM configuration (located in `config/typeorm.config.ts`).
+
 
 
 ### 4. Run the project
